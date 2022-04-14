@@ -1,0 +1,54 @@
+---
+apiVersion: "v1"
+kind: "ServiceAccount"
+metadata:
+  labels:
+    app.kubernetes.io/name: "business-command"
+    app.kubernetes.io/part-of: "core-app"
+  name: "business-command"
+---
+apiVersion: "v1"
+kind: "Service"
+metadata:
+  labels:
+    app.kubernetes.io/name: "business-command"
+    app.kubernetes.io/part-of: "core-app"
+  name: "business-command"
+spec:
+  ports:
+    - name: "http"
+      port: 80
+      targetPort: 8080
+  selector:
+    app.kubernetes.io/name: "business-command"
+    app.kubernetes.io/part-of: "core-app"
+  type: "ClusterIP"
+---
+apiVersion: "apps/v1"
+kind: "Deployment"
+metadata:
+  labels:
+    app.kubernetes.io/name: "business-command"
+    app.kubernetes.io/part-of: "core-app"
+  name: "business-command"
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app.kubernetes.io/name: "business-command"
+      app.kubernetes.io/part-of: "core-app"
+  template:
+    metadata:
+      labels:
+        app.kubernetes.io/name: "business-command"
+        app.kubernetes.io/part-of: "core-app"
+    spec:
+      containers:
+        - image: "302483762350.dkr.ecr.us-east-1.amazonaws.com/business-command:latest"
+          imagePullPolicy: "Always"
+          name: "business-command"
+          ports:
+            - containerPort: 8080
+              name: "http"
+              protocol: "TCP"
+      serviceAccount: "business-command"

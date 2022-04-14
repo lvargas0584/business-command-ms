@@ -1,0 +1,63 @@
+---
+openapi: 3.0.1
+info:
+  title: Generated API
+  version: "1.0"
+paths:
+  /business/v1/command/cancel/{msisdn}/{site}:
+    put:
+      parameters:
+        - name: msisdn
+          in: path
+          required: true
+          schema:
+            type: string
+        - name: site
+          in: path
+          required: true
+          schema:
+            format: int32
+            type: integer
+      responses:
+        "200":
+          description: OK
+  /business/v1/command/cancel/{msisdn}/{site}/{cancelationType}:
+    put:
+      parameters:
+        - name: cancelationType
+          in: path
+          required: true
+          schema:
+            type: string
+        - name: msisdn
+          in: path
+          required: true
+          schema:
+            type: string
+        - name: site
+          in: path
+          required: true
+          schema:
+            format: int32
+            type: integer
+      responses:
+        "200":
+          description: OK
+  /business/v1/command/subscribe:
+    put:
+      parameters:
+        - name: msisdn
+          in: query
+          schema:
+            type: string
+        - name: site
+          in: query
+          schema:
+            type: string
+      responses:
+        "200":
+          description: OK
+          content:
+            text/plain:
+              schema:
+                type: string
